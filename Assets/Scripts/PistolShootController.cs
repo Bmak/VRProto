@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR.Extras;
 
 namespace Valve.VR.InteractionSystem.Sample
 {
@@ -16,6 +17,7 @@ namespace Valve.VR.InteractionSystem.Sample
 		public Bullet BulletPrefab;
 		public Transform BulletStartPosition;
 		public GameObject ObjectSpawner;
+		public GameObject WeaponBody;
 		public ParticleSystem MuzzleFlash;
 		public WFX_LightFlicker WFX_LightFlicker;
 		public SoundPlayOneshot reloadSound;
@@ -40,6 +42,8 @@ namespace Valve.VR.InteractionSystem.Sample
         private Text _ammoText;
 
         private int _currentAmmo;
+
+        private Quaternion _defaultRotation;
         
 		//-------------------------------------------------
 		void Awake()
@@ -57,6 +61,8 @@ namespace Valve.VR.InteractionSystem.Sample
             _interactableObject = this.GetComponent<InteractableObject>();
             _currentAmmo = MAX_AMMO;
             _ammoText.text = _currentAmmo.ToString();
+            
+            _defaultRotation = WeaponBody.transform.localRotation;
 		}
 		
 		//-------------------------------------------------
@@ -114,6 +120,11 @@ namespace Valve.VR.InteractionSystem.Sample
 		}
 
         private bool lastHovering = false;
+
+
+        private float _recoilRecoverSpeed = 10f;
+        private float _recoilAmount = 5f;
+        
         private void Update()
         {
 	        if (!_interactableObject.IsGrabbing) return;
@@ -123,6 +134,9 @@ namespace Valve.VR.InteractionSystem.Sample
 	        {
 		        FireBullet();
 	        }
+	        //TODO Добавить помимо поворота при отдаче и смещение оружия
+	        WeaponBody.transform.localRotation = Quaternion.Lerp(WeaponBody.transform.localRotation, _defaultRotation, _recoilRecoverSpeed * Time.deltaTime);
+	        
 	        
             if (interactable.isHovering != lastHovering) //save on the .tostrings a bit
             {
@@ -139,6 +153,9 @@ namespace Valve.VR.InteractionSystem.Sample
 		        cantShootSound.Play();
 		        return;
 	        }
+
+	        GunRecoil();
+	        
 	        _currentAmmo--;
 	        UpdateAmmo();
 	        
@@ -159,6 +176,12 @@ namespace Valve.VR.InteractionSystem.Sample
 	        //rb.useGravity = true;
 	        //rb.velocity = BulletStartPosition.TransformDirection(Bullet.BULLET_SPEED, 0, 0);
 	        bullet.BulletReleased(transform);
+        }
+
+        private void GunRecoil()
+        {
+	        WeaponBody.transform.Rotate(Vector3.forward * _recoilAmount, Space.Self);
+
         }
 
         private void UpdateAmmo()
