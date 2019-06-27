@@ -52,14 +52,17 @@ public class Bullet : MonoBehaviour
         airReleaseSound.Play();
         
         _enemyHits.Clear();
-        RaycastHit[] hits = Physics.RaycastAll( transform.position,  transform.right, 1000f);
+        RaycastHit[] hits = Physics.RaycastAll( transform.position,  transform.right, 500f);
         foreach (RaycastHit hit in hits)
         {
-	        Debug.LogWarning(hit.transform.name);
+	        Debug.DrawRay(transform.position, transform.right, Color.red, 100f);
+	        //Debug.LogWarning("HIT " + hit.collider.gameObject.tag);
+	        //Debug.LogWarning("HIT " + hit.collider.gameObject.name);
+	        //Debug.LogWarning(hit.transform.name);
 	        bool hitBalloon = hit.collider.gameObject.GetComponent<Balloon>() != null;
 	        bool hitTarget = hit.collider.gameObject.GetComponent<ExplosionWobble>() != null;
 
-
+	        /*
 	        if ( hitTarget || hitBalloon )
 	        {
 		        hit.collider.gameObject.SendMessageUpwards( "ApplyDamage", SendMessageOptions.DontRequireReceiver );
@@ -72,7 +75,7 @@ public class Bullet : MonoBehaviour
 	        {
 		        Physics.IgnoreCollision( arrowHeadRB, hit.collider );
 	        }
-
+			*/
 	        
 	        //bool hitEnemy = hit.collider.gameObject.GetComponent<ZombeBehaviour>() != null;
 	        bool hitEnemy = hit.collider.gameObject.tag == "Enemy";
@@ -88,6 +91,8 @@ public class Bullet : MonoBehaviour
         var distance = 1000f;
         foreach (RaycastHit hit in _enemyHits)
         {
+	        validateHit = hit;
+	        break;
 	        float dist = Vector3.Distance(hit.transform.position, transform.position);
 	        if (dist < distance)
 	        {
@@ -102,12 +107,14 @@ public class Bullet : MonoBehaviour
 	        Transform t = validateHit.Value.transform;
 	        while (t.parent != null)
 	        {
-		        var z = t.parent.GetComponent<ZombeBehaviour>();
+		        var z = t.parent.GetComponent<EnemyController>();
 		        if (z != null)
 		        {
+			        z.OnDamage();
 			        var rb = validateHit.Value.rigidbody;
 			        rb.AddForce(-validateHit.Value.normal * 100f, ForceMode.Impulse);
-			        z.OnDamage();
+
+			        break;
 		        }
 		        t = t.parent.transform;
 	        }

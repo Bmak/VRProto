@@ -528,6 +528,7 @@ GameObject:
   - component: {fileID: 2876712890864350313}
   - component: {fileID: 1464561911708865803}
   - component: {fileID: 4564748119653236953}
+  - component: {fileID: 1454259692}
   m_Layer: 0
   m_Name: PistolPrefab
   m_TagString: Weapon
@@ -696,6 +697,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1454259692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5975592796177927505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d4cc6cf300b3e4bb1411c4e041030c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportAllowed: 1
+  overrideHoverLock: 1
 --- !u!1 &6683295792900745112
 GameObject:
   m_ObjectHideFlags: 0

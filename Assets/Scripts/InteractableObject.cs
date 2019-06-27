@@ -86,11 +86,12 @@ namespace Valve.VR.InteractionSystem.Sample
 
                 // Call this to continue receiving HandHoverUpdate messages,
                 // and prevent the hand from hovering over anything else
-                hand.HoverLock(interactable);
+                //TODO это помогло активировать AllowTeleportWhileAttachedToHand
+                //hand.HoverLock(interactable);
 
                 // Attach this object to the hand
                 hand.AttachObject(gameObject, startingGrabType, attachmentFlags);
-
+                
                 _isGrabbing = true;
                 _shootController.ShowAmmo(_isGrabbing);
             }
