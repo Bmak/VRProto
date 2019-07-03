@@ -2,13 +2,13 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.vrproto.exe",
+      "app_key": "application.generated.unity.vrprotomaster.exe",
       "launch_type": "url",
       "url": "steam://launch/",
       "action_manifest_path": "D:\\Probigi\\Projects\\Unity\\VRProto\\actions.json",
       "strings": {
         "en_us": {
-          "name": "VRProto [Testing]"
+          "name": "VRProto-master [Testing]"
         }
       }
     }

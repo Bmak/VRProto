@@ -42,10 +42,10 @@ namespace Valve.VR.InteractionSystem
 			if ( thisAudioSource != null && thisAudioSource.isActiveAndEnabled && !Util.IsNullOrEmpty( waveFiles ) )
 			{
 				//randomly apply a volume between the volume min max
-				//thisAudioSource.volume = Random.Range( volMin, volMax );
+				thisAudioSource.volume = Random.Range( volMin, volMax );
 
 				//randomly apply a pitch between the pitch min max
-				//thisAudioSource.pitch = Random.Range( pitchMin, pitchMax );
+				thisAudioSource.pitch = Random.Range( pitchMin, pitchMax );
 
 				// play the sound
 				thisAudioSource.PlayOneShot( waveFiles[Random.Range( 0, waveFiles.Length )] );

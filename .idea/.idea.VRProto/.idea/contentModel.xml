@@ -519,6 +519,7 @@
               </e>
             </e>
           </e>
+          <e p="link.xml" t="Include" />
           <e p="Plugins" t="Include">
             <e p="openvr_api.cs" t="Include" />
           </e>
@@ -540,6 +541,7 @@
             <e p="SteamVR_EnumEqualityComparer.cs" t="Include" />
             <e p="SteamVR_Events.cs" t="Include" />
             <e p="SteamVR_ExternalCamera.cs" t="Include" />
+            <e p="SteamVR_ExternalCamera_LegacyManager.cs" t="Include" />
             <e p="SteamVR_Fade.cs" t="Include" />
             <e p="SteamVR_Frustum.cs" t="Include" />
             <e p="SteamVR_IK.cs" t="Include" />
@@ -555,6 +557,7 @@
             <e p="SteamVR_SphericalProjection.cs" t="Include" />
             <e p="SteamVR_TrackedCamera.cs" t="Include" />
             <e p="SteamVR_TrackedObject.cs" t="Include" />
+            <e p="SteamVR_TrackingReferenceManager.cs" t="Include" />
             <e p="SteamVR_Utils.cs" t="Include" />
           </e>
           <e p="SteamVR.asmdef" t="Include" />

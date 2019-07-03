@@ -902,13 +902,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1546278376371513037, guid: 4422782908f85644a9c125af101e267f,
         type: 3}
-      propertyPath: m_MotionVectors
-      value: 2
+      propertyPath: m_DynamicOccludee
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1546278376371513037, guid: 4422782908f85644a9c125af101e267f,
         type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
+      propertyPath: m_MotionVectors
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4422782908f85644a9c125af101e267f, type: 3}
