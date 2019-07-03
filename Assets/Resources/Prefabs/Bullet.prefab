@@ -250,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPhysMaterial: {fileID: 13400000, guid: c509d5711dc2cc346be2763cd92383ca, type: 2}
   bulletView: {fileID: 722327703088061003}
+  hitEffect: {fileID: 19864504, guid: 9284ce06ffcd7a84d8df4d69ff51e0fa, type: 3}
   airReleaseSound: {fileID: 867189712849248485}
   hitTargetSound: {fileID: 7788090879039083073}
   hitGroundSound: {fileID: 6709341131392926527}

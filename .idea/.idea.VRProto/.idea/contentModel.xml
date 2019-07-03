@@ -7,44 +7,6 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="DynamicRagdoll" t="Include">
-          <e p="Demo" t="Include">
-            <e p="Scripts" t="Include">
-              <e p="AdjustCapsuleHeightToRagdoll.cs" t="Include" />
-              <e p="AIControl.cs" t="Include" />
-              <e p="CameraHandler.cs" t="Include" />
-              <e p="CannonBall.cs" t="Include" />
-              <e p="Character.cs" t="Include" />
-              <e p="CharacterControllerCollisions.cs" t="Include" />
-              <e p="CollisionRagdoller.cs" t="Include" />
-              <e p="DemoSceneController.cs" t="Include" />
-              <e p="PlayerControl.cs" t="Include" />
-              <e p="Rotator.cs" t="Include" />
-              <e p="Shooting.cs" t="Include" />
-            </e>
-          </e>
-          <e p="Scripts" t="Include">
-            <e p="Editor" t="Include">
-              <e p="RagdollControllerEditor.cs" t="Include" />
-              <e p="RagdollControllerProfileEditor.cs" t="Include" />
-              <e p="RagdollEditor.cs" t="Include" />
-              <e p="RagdollProfileEditor.cs" t="Include" />
-            </e>
-            <e p="Ragdoll.cs" t="Include" />
-            <e p="RagdollBone.cs" t="Include" />
-            <e p="RagdollBuilder.cs" t="Include" />
-            <e p="RagdollControl" t="Include">
-              <e p="RagdollController.cs" t="Include" />
-              <e p="RagdollControllerProfile.cs" t="Include" />
-            </e>
-            <e p="RagdollProfile.cs" t="Include" />
-            <e p="Utils" t="Include">
-              <e p="Common.cs" t="Include" />
-              <e p="TriggerDetector.cs" t="Include" />
-              <e p="VelocityTracker.cs" t="Include" />
-            </e>
-          </e>
-        </e>
         <e p="Editor" t="Include">
           <e p="ExportTerrain.cs" t="Include" />
         </e>
@@ -318,6 +280,7 @@
           <e p="SpawnPoint.cs" t="Include" />
           <e p="Utils" t="Include">
             <e p="IgnoreCollision.cs" t="Include" />
+            <e p="Laser.cs" t="Include" />
           </e>
           <e p="VR_AvatarController.cs" t="Include" />
           <e p="ZombeBehaviour.cs" t="Include" />

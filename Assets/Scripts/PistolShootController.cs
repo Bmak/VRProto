@@ -113,7 +113,6 @@ namespace Valve.VR.InteractionSystem.Sample
         private void GunRecoil()
         {
 	        WeaponBody.transform.Rotate(Vector3.forward * _recoilAmount, Space.Self);
-
         }
 
         private void UpdateAmmo()

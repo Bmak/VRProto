@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
 {
     public PhysicMaterial targetPhysMaterial;
     public GameObject bulletView;
+    public ParticleSystem hitEffect;
     
     public SoundPlayOneshot airReleaseSound;
     public SoundPlayOneshot hitTargetSound;
@@ -40,8 +41,6 @@ public class Bullet : MonoBehaviour
     }
 
 	
-    private List<RaycastHit> _enemyHits = new List<RaycastHit>();
-
     private Transform _weapon;
     //-------------------------------------------------
     public void BulletReleased(Transform weapon)
@@ -51,99 +50,53 @@ public class Bullet : MonoBehaviour
 	    
         airReleaseSound.Play();
         
-        _enemyHits.Clear();
-        RaycastHit[] hits = Physics.RaycastAll( transform.position,  transform.right, 500f);
-        foreach (RaycastHit hit in hits)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.right, out hit))
         {
-	        Debug.DrawRay(transform.position, transform.right, Color.red, 100f);
-	        //Debug.LogWarning("HIT " + hit.collider.gameObject.tag);
-	        //Debug.LogWarning("HIT " + hit.collider.gameObject.name);
-	        //Debug.LogWarning(hit.transform.name);
-	        bool hitBalloon = hit.collider.gameObject.GetComponent<Balloon>() != null;
-	        bool hitTarget = hit.collider.gameObject.GetComponent<ExplosionWobble>() != null;
-
-	        /*
-	        if ( hitTarget || hitBalloon )
-	        {
-		        hit.collider.gameObject.SendMessageUpwards( "ApplyDamage", SendMessageOptions.DontRequireReceiver );
-		        gameObject.SendMessage( "HasAppliedDamage", SendMessageOptions.DontRequireReceiver );
-		        hitTargetSound.Play();
-		        bulletView.SetActive(false);
-	        }
-
-	        if ( hitBalloon )
-	        {
-		        Physics.IgnoreCollision( arrowHeadRB, hit.collider );
-	        }
-			*/
+	        SpawnParticles(hitEffect, hit.point);
 	        
-	        //bool hitEnemy = hit.collider.gameObject.GetComponent<ZombeBehaviour>() != null;
-	        bool hitEnemy = hit.collider.gameObject.tag == "Enemy";
-	        if (hitEnemy)
-	        {
-		        _enemyHits.Add(hit);
-	        }
-			
-	        Destroy( gameObject , 5f);
-        }
-
-        RaycastHit? validateHit = null;
-        var distance = 1000f;
-        foreach (RaycastHit hit in _enemyHits)
-        {
-	        validateHit = hit;
-	        break;
-	        float dist = Vector3.Distance(hit.transform.position, transform.position);
-	        if (dist < distance)
-	        {
-		        distance = dist;
-		        validateHit = hit;
-	        }
-	        
-        }
-
-        if (validateHit != null)
-        {
-	        Transform t = validateHit.Value.transform;
+	        Transform t = hit.transform;
 	        while (t.parent != null)
 	        {
 		        var z = t.parent.GetComponent<EnemyController>();
 		        if (z != null)
 		        {
 			        z.OnDamage();
-			        var rb = validateHit.Value.rigidbody;
-			        rb.AddForce(-validateHit.Value.normal * 100f, ForceMode.Impulse);
+			        var rb = hit.rigidbody;
+			        rb.AddForce(-hit.normal * 100f, ForceMode.Impulse);
+
+			        hitTargetSound.Play();
 
 			        break;
 		        }
 		        t = t.parent.transform;
 	        }
-	        //validateHit.Value.collider.gameObject.GetComponent<ZombeBehaviour>().OnDamage();
-	        bulletView.SetActive(false);
-	        hitTargetSound.Play();
-	        Physics.IgnoreCollision( arrowHeadRB, validateHit.Value.collider );
-	        _enemyHits.Clear();
+	        //bulletView.SetActive(false);
+	        Destroy( gameObject, 2f );
+	        Physics.IgnoreCollision( arrowHeadRB, hit.collider );
+	        return;
         }
-
-        // Check if arrow is shot inside or too close to an object
-        /*
-        RaycastHit[] hits = Physics.SphereCastAll( transform.position, 0.01f, transform.forward, 0.80f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore );
-        foreach ( RaycastHit hit in hits )
-        {
-            if ( hit.collider.gameObject != gameObject
-                 && hit.collider.gameObject != arrowHeadRB.gameObject
-                 && hit.collider != Player.instance.headCollider
-                 && hit.transform.name != "PistolPrefab")
-            {
-	            Debug.LogWarning("DESTROYED " + hit.transform.name);
-                Destroy( gameObject );
-                return;
-            }
-        }
-		*/
-        //SetCollisionMode(CollisionDetectionMode.ContinuousDynamic);
-
+        
         Destroy( gameObject, 10 );
+    }
+
+    private bool bParticlesSpawned = false;
+    private void SpawnParticles(ParticleSystem particlePrefab, Vector3 position)
+    {
+	    // Don't do this twice
+	    if ( bParticlesSpawned )
+	    {
+		    return;
+	    }
+
+	    bParticlesSpawned = true;
+
+	    if ( particlePrefab != null )
+	    {
+		    ParticleSystem particleObject = Instantiate( particlePrefab, position, transform.rotation ) as ParticleSystem;
+		    particleObject.Play();
+		    Destroy( particleObject, 2f );
+	    }
     }
     
     protected void SetCollisionMode(CollisionDetectionMode newMode, bool force = false)
