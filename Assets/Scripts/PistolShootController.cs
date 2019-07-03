@@ -43,6 +43,9 @@ namespace Valve.VR.InteractionSystem.Sample
 
         private Quaternion _defaultRotation;
         
+        private float _currFirePause = 0f;
+        public float FIRE_PAUSE = 1f;
+        
 		//-------------------------------------------------
 		void Awake()
 		{
@@ -65,7 +68,27 @@ namespace Valve.VR.InteractionSystem.Sample
         private void Update()
         {
 	        if (!_interactableObject.IsGrabbing) return;
+
+	        bool state = SteamVR_Input.GetState("GrabPinch", SteamVR_Input_Sources.RightHand, true);
+	        if (state)
+	        {
+		        if (_currFirePause <= 0)
+		        {
+			        FireBullet();
+			        _currFirePause = FIRE_PAUSE;
+		        }
+
+		        _currFirePause -= Time.deltaTime;
+	        }
+	        else
+	        {
+		        _currFirePause = 0;
+	        }
 	        
+	        WeaponBody.transform.localRotation = Quaternion.Lerp(WeaponBody.transform.localRotation, _defaultRotation, _recoilRecoverSpeed * Time.deltaTime);
+	        
+	        return;
+	        //For single shooting
 	        bool stateDown = SteamVR_Input.GetStateDown("GrabPinch", SteamVR_Input_Sources.RightHand);
 	        if (stateDown)
 	        {
@@ -93,6 +116,7 @@ namespace Valve.VR.InteractionSystem.Sample
 	        _currentAmmo--;
 	        UpdateAmmo();
 	        
+	        MuzzleFlash.Stop();
 	        MuzzleFlash.Play();
 	        WFX_LightFlicker.Play();
 	        
